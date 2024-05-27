@@ -22,24 +22,24 @@ const GRID_SIZE = 32;
 let player;
 let blocks;
 let cursors;
+let availableNfts = [];
 
-// Example NFT data
+// Example NFT data (replace with actual NFT URLs)
 const nftData = [
-    { imageUrl: 'assets/block.png' }, // Replace with actual NFT URLs
-    { imageUrl: 'assets/block.png' }, // Replace with actual NFT URLs
+    { imageUrl: 'assets/images/block.png' },
+    { imageUrl: 'assets/images/block.png' },
 ];
 
-// Array to keep track of used NFTs
-let availableNfts = [...nftData];
-
-function preload() {
-    this.load.image('background', 'assets/background.png');
-    this.load.spritesheet('player', 'assets/player.png', { frameWidth: 32, frameHeight: 48 });
+async function preload() {
+    this.load.image('background', 'assets/images/background.png');
+    this.load.spritesheet('player', 'assets/images/player.png', { frameWidth: 32, frameHeight: 48 });
 
     // Load NFT images dynamically
     nftData.forEach((nft, index) => {
         this.load.image(`nft${index}`, nft.imageUrl);
     });
+
+    availableNfts = [...nftData];
 }
 
 function create() {
@@ -92,7 +92,7 @@ function update() {
     }
 
     if (cursors.up.isDown && player.body.touching.down) {
-        player.setVelocityY(330);
+        player.setVelocityY(-330);
     }
 }
 
@@ -103,9 +103,11 @@ function placeBlock() {
     }
 
     const x = Phaser.Math.Snap.To(player.x, GRID_SIZE);
-    const y = Phaser.Math.Snap.To(player.y - player.height, GRID_SIZE);
+    const y = Phaser.Math.Snap.To(player.y + player.height / 2, GRID_SIZE); // Adjust to place below the player
     const nft = availableNfts.shift(); // Remove the first available NFT
     const nftIndex = nftData.indexOf(nft);
     const block = blocks.create(x, y, `nft${nftIndex}`);
     block.setCollideWorldBounds(true);
+    block.refreshBody(); // Refresh the static body to ensure proper collision
+    block.setDisplaySize(GRID_SIZE, GRID_SIZE); // Resize the block to 32x32 pixels
 }
