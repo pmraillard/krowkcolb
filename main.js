@@ -34,25 +34,12 @@ async function preload() {
     this.load.image('background', 'assets/images/background.png');
     this.load.spritesheet('player', 'assets/images/player.png', { frameWidth: 32, frameHeight: 48 });
 
-    // Load and resize NFT images dynamically
+    // Load NFT images dynamically
     nftData.forEach((nft, index) => {
         this.load.image(`nft${index}`, nft.imageUrl);
     });
 
-    this.load.once('complete', () => {
-        nftData.forEach((nft, index) => {
-            let tempSprite = this.add.sprite(0, 0, `nft${index}`).setVisible(false);
-            tempSprite.setDisplaySize(GRID_SIZE, GRID_SIZE);
-            let texture = tempSprite.texture;
-            let canvasTexture = this.textures.createCanvas(`resizedNft${index}`, GRID_SIZE, GRID_SIZE);
-            canvasTexture.draw(0, 0, texture.getSourceImage(), texture.getFrameSource());
-
-            tempSprite.destroy();
-        });
-    });
-
     availableNfts = [...nftData];
-    this.load.start();
 }
 
 function create() {
@@ -101,4 +88,26 @@ function update() {
         player.anims.play('right', true);
     } else {
         player.setVelocityX(0);
-        player.anims.play
+        player.anims.play('turn');
+    }
+
+    if (cursors.up.isDown && player.body.touching.down) {
+        player.setVelocityY(-330);
+    }
+}
+
+function placeBlock() {
+    if (availableNfts.length === 0) {
+        console.log('No more NFTs available to place as blocks');
+        return;
+    }
+
+    const x = Phaser.Math.Snap.To(player.x, GRID_SIZE);
+    const y = Phaser.Math.Snap.To(player.y + player.height / 2, GRID_SIZE); // Adjust to place below the player
+    const nft = availableNfts.shift(); // Remove the first available NFT
+    const nftIndex = nftData.indexOf(nft);
+    const block = blocks.create(x, y, `nft${nftIndex}`);
+    block.setCollideWorldBounds(true);
+    block.refreshBody(); // Refresh the static body to ensure proper collision
+    block.setDisplaySize(GRID_SIZE, GRID_SIZE); // Resize the block to 32x32 pixels
+}
