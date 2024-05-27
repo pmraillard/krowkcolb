@@ -25,16 +25,16 @@ let cursors;
 
 // Example NFT data
 const nftData = [
-    { imageUrl: 'assets/images/block.png' }, // Replace with actual NFT URLs
-    { imageUrl: 'assets/images/block.png' }, // Replace with actual NFT URLs
+    { imageUrl: 'assets/block.png' }, // Replace with actual NFT URLs
+    { imageUrl: 'assets/block.png' }, // Replace with actual NFT URLs
 ];
 
 // Array to keep track of used NFTs
 let availableNfts = [...nftData];
 
 function preload() {
-    this.load.image('background', 'assets/images/background.png');
-    this.load.spritesheet('player', 'assets/images/player.png', { frameWidth: 32, frameHeight: 48 });
+    this.load.image('background', 'assets/background.png');
+    this.load.spritesheet('player', 'assets/player.png', { frameWidth: 32, frameHeight: 48 });
 
     // Load NFT images dynamically
     nftData.forEach((nft, index) => {
