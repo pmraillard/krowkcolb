@@ -18,7 +18,7 @@ const config = {
 
 const game = new Phaser.Game(config);
 
-const GRID_SIZE = 64;
+const GRID_SIZE = 128;
 let player;
 let blocks;
 let cursors;
