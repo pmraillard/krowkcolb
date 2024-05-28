@@ -45,7 +45,7 @@ function preload() {
 function create() {
     this.add.image(400, 300, 'background');
 
-    blocks = this.physics.add.staticGroup();
+   // blocks = this.physics.add.staticGroup();
 
     player = this.physics.add.sprite(200, 450, 'player');
     player.setBounce(0.2);
