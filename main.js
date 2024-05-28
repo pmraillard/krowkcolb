@@ -25,8 +25,8 @@ let cursors;
 
 // Example NFT data
 const nftData = [
-    { imageUrl: 'assets/block.png' }, // Replace with actual NFT URLs
-    { imageUrl: 'assets/block.png' }, // Replace with actual NFT URLs
+    { imageUrl: 'assets/images/block.png' }, // Replace with actual NFT URLs
+    { imageUrl: 'assets/images/block.png' }, // Replace with actual NFT URLs
 ];
 
 // Array to keep track of used NFTs
