@@ -5,7 +5,7 @@ const config = {
     physics: {
         default: 'arcade',
         arcade: {
-            gravity: { y: 300 },
+            gravity: { y: 200 },
             debug: false
         }
     },
@@ -47,7 +47,7 @@ function create() {
 
     blocks = this.physics.add.staticGroup();
 
-    player = this.physics.add.sprite(100, 450, 'player');
+    player = this.physics.add.sprite(200, 450, 'player');
     player.setBounce(0.2);
     player.setCollideWorldBounds(true);
 
